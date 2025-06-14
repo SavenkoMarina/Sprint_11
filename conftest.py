@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from selenium import webdriver
@@ -8,7 +10,12 @@ from pages.registration_page import RegistrationPage
 
 @pytest.fixture
 def driver():
-    driver = webdriver.Chrome()
+    path = os.environ.get("REMOTE_BROWSER_PATH")
+    if path:
+        options = webdriver.ChromeOptions()
+        driver = webdriver.Remote(command_executor=path, options=options)
+    else:
+        driver = webdriver.Chrome()
     yield driver
     driver.quit()
 
