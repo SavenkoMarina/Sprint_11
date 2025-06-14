@@ -12,6 +12,8 @@ jobs:
       # Первый шаг оставим таким же
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Pull selenoid image
+        run: docker pull selenoid/chrome:128.0
       # Поднимаем контейнеры и выходим при завершении работы контейнера test_docker
       - name: Run tests in docker
         run: docker compose up --build --exit-code-from test_docker
